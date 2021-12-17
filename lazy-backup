@@ -1,0 +1,25 @@
+#!/bin/bash
+
+#  _                    ____             _                
+# | |    __ _ _____   _| __ )  __ _  ___| | ___   _ _ __  
+# | |   / _` |_  / | | |  _ \ / _` |/ __| |/ / | | | '_ \ 
+# | |__| (_| |/ /| |_| | |_) | (_| | (__|   <| |_| | |_) |
+# |_____\__,_/___|\__, |____/ \__,_|\___|_|\_\\__,_| .__/ 
+#                 |___/                            |_|    
+#
+
+BACKUP_LIST_FILE="backup.list"
+BACKUP_FILE="$(date +"%Y%m%d%H%M%S").bkp"
+MAX_BKP_FILE_SIZE=4294967296 #4Gb
+HOME_TAG="<home>"
+
+[ -f "$BACKUP_LIST_FILE" ] || { echo "No backup file found"; exit 1; }
+
+BACKUP_LIST=$(grep -v "^#\|^$" "$BACKUP_LIST_FILE" | sed "s/$HOME_TAG/$HOME/g")
+
+[ -z "${BACKUP_LIST-x}" ] && { echo "Nothing to backup..."; exit 0; }
+
+tar cvfz "$BACKUP_FILE" $BACKUP_LIST
+
+BACKUP_SIZE=$(stat -c%s "$BACKUP_FILE")
+[ "$BACKUP_SIZE" -gt "$MAX_BKP_FILE_SIZE" ] && split -d -b "$MAX_BKP_FILE_SIZE" "$BACKUP_FILE" "$BACKUP_FILE.part"

@@ -1,0 +1,42 @@
+#
+# LazyBackup list
+#
+# List of dirs/files to backup with LazyBackup
+#
+# * It is recomended to use absolute paths 
+# * Lines starting with "#" will be ignored
+# * <home> will be replaced by the home dir of the current user
+# * Shell variables won't work (like $HOME)
+#
+
+# Maven
+<home>/.m2
+
+# Repos dir
+<home>/dev
+
+# IntelliJ
+<home>/.config/JetBrains
+
+# Alacritty
+<home>/.config/alacritty
+
+# Git Config
+<home>/.gitconfig
+
+# AWS Cli
+<home>/.aws
+
+# Pulseaudio
+<home>/.config/daemon.conf
+
+# RC Files
+# <home>/.bashrc
+# <home>/.zshrc
+
+# <home>/.profile
+# <home>/.bash_profile
+# <home>/.zprofile
+
+# Vim
+# <home>/.vimrc
